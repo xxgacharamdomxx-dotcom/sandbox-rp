@@ -1,0 +1,304 @@
+/* ==========================================================================
+   1. CONFIGURACIÓN GENERAL Y RESET
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Evita que los tamaños se descompongan con el padding */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #0b0f19; /* Fondo oscuro profundo idéntico a WorldOS */
+    color: #ffffff;
+    overflow: hidden; /* Evita que la pantalla completa tenga scroll rebelde */
+    height: 100vh;
+}
+
+/* ==========================================================================
+   2. CONTENEDOR MAESTRO (DIVISOR DE PANTALLA)
+   ========================================================================== */
+.interface-container {
+    display: grid;
+    /* Divide en 2 columnas: izquierda de 260px fija, derecha ocupa todo el resto (1fr) */
+    grid-template-columns: 260px 1fr; 
+    height: 100vh;
+    width: 100vw;
+}
+
+/* ==========================================================================
+   3. BARRA LATERAL IZQUIERDA (SIDEBAR)
+   ========================================================================== */
+.sidebar {
+    background-color: #111625; /* Un tono un poco más claro que el fondo general */
+    border-right: 1px solid #1e2640; /* Línea sutil de división */
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column; /* Acomoda los bloques hacia abajo (en vertical) */
+    justify-content: space-between; /* Empuja el footer/historial hacia el fondo */
+    height: 100%;
+}
+
+/* Bloque 1: El Logo */
+.sidebar-logo h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 30px;
+}
+
+.sidebar-logo h2 span {
+    color: #4f46e5; /* El toque azul/morado premium de la marca */
+}
+
+/* Bloque 2: Contenedor de Botones de Navegación */
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Separación limpia entre cada botón */
+    flex-grow: 1; /* Hace que el menú ocupe el espacio disponible central */
+}
+
+/* Estilo base de TODOS los botones del menú */
+.menu-btn {
+    background: none;
+    border: none;
+    color: #9ca3af; /* Color gris suave para los botones inactivos */
+    text-align: left; /* Alinea el texto a la izquierda */
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 8px; /* Esquinas redondeadas suaves */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Separación entre el emoji y el texto */
+    transition: all 0.2s ease; /* Transición suave al pasar el dedo/mouse */
+}
+
+/* Efecto al pasar el cursor (Hover) */
+.menu-btn:hover {
+    background-color: #1e2640;
+    color: #ffffff;
+}
+
+/* Estilo del botón ACTIVO (El seleccionado en azul, como en tu captura) */
+.menu-btn.active {
+    background-color: #2563eb; /* Azul WorldOS */
+    color: #ffffff;
+}
+
+/* Bloque 3: Sección inferior (Historial) */
+.sidebar-footer {
+    border-top: 1px solid #1e2640;
+    padding-top: 16px;
+    margin-top: auto;
+}
+
+.section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b7280; /* Texto gris oscuro y pequeño para subtítulos */
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    padding-left: 8px;
+}
+
+.history-btn {
+    background-color: #1a2238;
+    border: 1px solid #232e4c;
+    color: #a5b4fc;
+    width: 100%;
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ==========================================================================
+   4. PANEL DE CONTENIDO DERECHO (CONTENIDO GENERAL)
+   ========================================================================== */
+.main-content {
+    background-color: #0b0f19;
+    padding: 32px;
+    overflow-y: auto; /* Permite hacer scroll vertical de forma independiente a la barra izquierda */
+    display: flex;
+    flex-direction: column;
+    gap: 28px; /* Separación uniforme entre el Banner, Filtros y Tarjetas */
+}
+
+/* ==========================================================================
+   5. DISEÑO DEL BANNER (HERO COMPONENT)
+   ========================================================================== */
+.banner-hero {
+    position: relative;
+    background-color: #1a2238; /* Color base antes de meter imágenes en tu carpeta assets */
+    min-height: 280px;
+    border-radius: 16px; /* Esquinas redondeadas idénticas a la interfaz de tu captura */
+    padding: 40px;
+    display: flex;
+    align-items: flex-end; /* Alinea los textos en la parte inferior del banner */
+    overflow: hidden;
+    border: 1px solid #1f2937;
+}
+
+/* Capa degradada oscura para simular el fondo anime de WorldOS */
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(11, 15, 25, 0.2) 0%, rgba(11, 15, 25, 0.85) 100%);
+    z-index: 1;
+}
+
+.banner-info {
+    position: relative;
+    z-index: 2; /* Empuja el texto al frente para que no lo tape la capa oscura */
+    max-width: 650px;
+}
+
+.banner-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+.banner-description {
+    font-size: 15px;
+    color: #9ca3af;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+/* Fila de metadatos (Estadísticas del mundo de rol) */
+.banner-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+/* El botón azul premium de "Jugar ahora" */
+.btn-play {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 24px; /* Completamente ovalado */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-play:hover {
+    background-color: #1d4ed8;
+}
+
+/* ==========================================================================
+   6. BARRA HORIZONTAL DE CATEGORÍAS
+   ========================================================================== */
+.categories-bar {
+    width: 100%;
+    overflow-x: auto; /* Si hay demasiadas categorías en el celular, permite deslizarlas de lado */
+}
+
+/* Oculta la barra de scroll estética para que se vea más limpio */
+.categories-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.categories-container {
+    display: flex;
+    gap: 8px;
+    white-space: nowrap; /* Evita que las pestañas se amontonen hacia abajo */
+}
+
+.category-tab {
+    background-color: #111625;
+    border: 1px solid #1e2640;
+    color: #9ca3af;
+    padding: 8px 16px;
+    border-radius: 20px; /* Bordes ovalados tipo WorldOS */
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-tab:hover {
+    border-color: #3b82f6;
+    color: #ffffff;
+}
+
+.category-tab.active {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   7. SECCIÓN DE TARJETAS INFERIORES (GRID RESPONSIBLE)
+   ========================================================================== */
+.showcase-section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.section-subtitle {
+    font-size: 12px;
+    font-weight: 700;
+    color: #4b5563;
+    letter-spacing: 1.5px;
+}
+
+/* Distribución inteligente de las tarjetas */
+.worlds-grid {
+    display: grid;
+    /* Crea columnas automáticas: mínimo 240px cada una, si hay espacio se expanden */
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.world-card {
+    background-color: #111625;
+    border: 1px solid #1e2640;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.world-card:hover {
+    transform: translateY(-4px); /* Efecto sutil de flotado */
+    border-color: #2563eb;
+}
+
+.card-image-placeholder {
+    height: 140px;
+    background-color: #1e2640; /* Espacio listo para cuando asignes imágenes */
+}
+
+.card-content {
+    padding: 14px;
+}
+
+.card-content h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.card-content p {
+    font-size: 12px;
+    color: #6b7280;
+}

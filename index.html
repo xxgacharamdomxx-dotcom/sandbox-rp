@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandbox RP - Interfaz</title>
+    <!-- Enlazamos nuestro archivo de diseño que está dentro de la carpeta css -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Contenedor maestro que divide toda la pantalla tipo WorldOS -->
+    <div class="interface-container">
+
+        <!-- BARRA LATERAL IZQUIERDA (Menú de navegación y botones) -->
+        <aside class="sidebar">
+            
+            <!-- Bloque 1: El Logo o Nombre de tu Web -->
+            <div class="sidebar-logo">
+                <h2>Sandbox<span>RP</span></h2>
+            </div>
+
+            <!-- Bloque 2: Los Botones Principales de Navegación -->
+            <nav class="sidebar-menu">
+                <button class="menu-btn active">
+                    <span class="icon">🌐</span> Mundos
+                </button>
+                <button class="menu-btn">
+                    <span class="icon">👤</span> Personajes
+                </button>
+                <button class="menu-btn">
+                    <span class="icon">🎮</span> Perfil
+                </button>
+                <button class="menu-btn">
+                    <span class="icon">👥</span> Comunidad
+                </button>
+                <button class="menu-btn">
+                    <span class="icon">🛍️</span> Mercado de apps
+                </button>
+                <button class="menu-btn">
+                    <span class="icon">🗺️</span> Mapas
+                </button>
+            </nav>
+
+            <!-- Bloque 3: Sección inferior (Historial) -->
+            <div class="sidebar-footer">
+                <p class="section-title">HISTORIAL</p>
+                <button class="history-btn">
+                    <span class="icon">💬</span> Último Rol...
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- PANEL DE CONTENIDO DERECHO (Donde irán los simuladores y tarjetas) -->
+        <main class="main-content">
+                    <!-- PANEL DE CONTENIDO DERECHO (Estructura interna) -->
+        <main class="main-content">
+            
+            <!-- BLOQUE 1: BANNER HERO (Simulador de Demon Slayer) -->
+            <section class="banner-hero">
+                <div class="banner-overlay"></div> <!-- Capa oscura para que el texto sea legible -->
+                <div class="banner-info">
+                    <h1 class="banner-title">Simulador de Demon Slayer</h1>
+                    <p class="banner-description">
+                        Japón, era Taishō. Sobreviviste a la Selección Final en el Monte Fujikasane y conseguiste tu primer cuervo. Respira, desenvaina tu espada Nichirin y...
+                    </p>
+                    <div class="banner-meta">
+                        <span>👤 Gugugaga</span>
+                        <span>👁️ 6K</span>
+                        <span>💬 172K</span>
+                        <span>⭐ 503</span>
+                    </div>
+                    <button class="btn-play">▶ Jugar ahora</button>
+                </div>
+            </section>
+
+            <!-- BLOQUE 2: BARRA DE CATEGORÍAS (Filtros horizontales) -->
+            <section class="categories-bar">
+                <div class="categories-container">
+                    <span class="category-tab active">✨ Para ti</span>
+                    <span class="category-tab">🔥 Popular</span>
+                    <span class="category-tab">🏆 Clasificación</span>
+                    <span class="category-tab">👥 Siguiendo</span>
+                    <span class="category-tab">🧬 Omegaverse</span>
+                    <span class="category-tab">💖 Romance</span>
+                    <span class="category-tab">🏫 Escuela</span>
+                    <span class="category-tab">🌲 Supervivencia</span>
+                </div>
+            </section>
+
+            <!-- BLOQUE 3: SECCIÓN DE TARJETAS (Elegido para ti) -->
+            <section class="showcase-section">
+                <h3 class="section-subtitle">✨ ELEGIDO PARA TI</h3>
+                
+                <div class="worlds-grid">
+                    <!-- Tarjeta de ejemplo 1 -->
+                    <div class="world-card">
+                        <div class="card-image-placeholder"></div>
+                        <div class="card-content">
+                            <h4>Lector Omnisciente</h4>
+                            <p>Entorno de rol interactivo...</p>
+                        </div>
+                    </div>
+                    <!-- Tarjeta de ejemplo 2 -->
+                    <div class="world-card">
+                        <div class="card-image-placeholder"></div>
+                        <div class="card-content">
+                            <h4>Kimetsu High School</h4>
+                            <p>Un mundo alternativo escolar...</p>
+                        </div>
+                    </div>
+                    <!-- Tarjeta de ejemplo 3 -->
+                    <div class="world-card">
+                        <div class="card-image-placeholder"></div>
+                        <div class="card-content">
+                            <h4>Solo Leveling Sandbox</h4>
+                            <p>Sube de rango y limpia mazmorras...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <!-- Enlazamos nuestro archivo de lógica justo antes de cerrar el cuerpo -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>
