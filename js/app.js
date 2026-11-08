@@ -123,9 +123,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (worldsCategories) worldsCategories.classList.remove("hidden");
                 if (worldsShowcase) worldsShowcase.classList.remove("hidden");
                 if (btnOpenCreator) btnOpenCreator.classList.remove("hidden");
-                cargarMundosEnGrid(); // Recarga las tarjetas y añade los eventos
+                cargarMundosEnGrid(); 
             } else {
-                // Si hace clic en Perfil, Apps, Personajes, etc., inyectamos su HTML correspondiente
                 if (simulationTerminal) simulationTerminal.classList.add("hidden");
                 if (worldsBanner) worldsBanner.classList.add("hidden");
                 if (worldsCategories) worldsCategories.classList.add("hidden");
@@ -168,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const btnStartGame = document.getElementById("btn-start-game");
         if (btnStartGame) {
             btnStartGame.onclick = () => {
-                if (worldsBanner) worldsBanner.classList.add("hidden");
+                if (worldsBanner) worldsBanner.add ? worldsBanner.classList.add("hidden") : worldsBanner.classList.add("hidden");
                 if (worldsCategories) worldsCategories.classList.add("hidden");
                 if (worldsShowcase) worldsShowcase.classList.add("hidden");
                 if (btnOpenCreator) btnOpenCreator.classList.add("hidden");
@@ -195,3 +194,16 @@ document.addEventListener("DOMContentLoaded", () => {
         pantallaChat.scrollTop = pantallaChat.scrollHeight;
     }
 
+    if (btnEnviar) btnEnviar.addEventListener("click", enviarAccionUsuario);
+    if (inputAccion) {
+    if (inputAccion) {
+        inputAccion.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                enviarAccionUsuario();
+            }
+        });
+    }
+
+    // Inicializar cargando el grid principal de mundos en pantalla
+    cargarMundosEnGrid();
+});
