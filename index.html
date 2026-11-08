@@ -52,13 +52,11 @@
 
         </aside>
 
-        <!-- PANEL DE CONTENIDO DERECHO (Donde irán los simuladores y tarjetas) -->
-        <main class="main-content">
-                    <!-- PANEL DE CONTENIDO DERECHO (Estructura interna) -->
+        <!-- PANEL DE CONTENIDO DERECHO (CORREGIDO: Solo un <main> maestro) -->
         <main class="main-content">
             
             <!-- BLOQUE 1: BANNER HERO (Simulador de Demon Slayer) -->
-            <section class="banner-hero">
+            <section id="worlds-banner" class="banner-hero">
                 <div class="banner-overlay"></div> <!-- Capa oscura para que el texto sea legible -->
                 <div class="banner-info">
                     <h1 class="banner-title">Simulador de Demon Slayer</h1>
@@ -71,12 +69,12 @@
                         <span>💬 172K</span>
                         <span>⭐ 503</span>
                     </div>
-                    <button class="btn-play">▶ Jugar ahora</button>
+                    <button class="btn-play" id="btn-start-game">▶ Jugar ahora</button>
                 </div>
             </section>
 
             <!-- BLOQUE 2: BARRA DE CATEGORÍAS (Filtros horizontales) -->
-            <section class="categories-bar">
+            <section id="worlds-categories" class="categories-bar">
                 <div class="categories-container">
                     <span class="category-tab active">✨ Para ti</span>
                     <span class="category-tab">🔥 Popular</span>
@@ -90,7 +88,7 @@
             </section>
 
             <!-- BLOQUE 3: SECCIÓN DE TARJETAS (Elegido para ti) -->
-            <section class="showcase-section">
+            <section id="worlds-showcase" class="showcase-section">
                 <h3 class="section-subtitle">✨ ELEGIDO PARA TI</h3>
                 
                 <div class="worlds-grid">
@@ -120,10 +118,53 @@
                     </div>
                 </div>
             </section>
-        </main>
-    </div>
+
+            <!-- BLOQUE 4: TERMINAL DE SIMULACIÓN (EMPIEZA OCULTA) -->
+            <section id="simulation-terminal" class="simulation-container hidden">
+                
+                <!-- Área central: Consola de texto y barra de entrada -->
+                <div class="terminal-core">
+                    <!-- Pantalla de mensajes en cascada -->
+                    <div class="terminal-screen" id="chat-screen">
+                        <div class="system-log">─── INICIALIZANDO ENTORNO SANDBOX... LISTO ───</div>
+                        
+                        <div class="message system">
+                            <span class="sender">[SISTEMA]</span>
+                            <p>Has iniciado el simulador. Despiertas en la Era Taishō de Japón. El frío de la noche cala en tus huesos y la empuñadura de tu espada Nichirin se siente pesada en tu mano derecha. Un cuervo Kasugai grazna en la distancia...</p>
+                        </div>
+                    </div>
+
+                    <!-- Barra inferior para ingresar texto -->
+                    <div class="terminal-input-zone">
+                        <input type="text" id="user-input" placeholder="INGRESA TU PRÓXIMA ACCIÓN AQUÍ (EJ: 'DESENVAIÑO MI ESPADA')..." autocomplete="off">
+                        <button id="btn-send-action">ENVIAR</button>
+                    </div>
+                </div>
+
+                <!-- Barra lateral interna: Ventana de Sistema e Inventario -->
+                <aside class="system-monitor">
+                    <div class="monitor-header">MONITOR DE ESTADO</div>
+                    
+                    <div class="stats-panel">
+                        <div class="stat-row"><span>RANGO:</span> <span class="stat-val">MIZUNOTO</span></div>
+                        <div class="stat-row"><span>SALUD:</span> <span class="stat-val color-neon">100/100</span></div>
+                        <div class="stat-row"><span>ENERGÍA:</span> <span class="stat-val color-neon">50/50</span></div>
+                        <div class="stat-row"><span>RESPIRACIÓN:</span> <span class="stat-val">AGUA (NIV. 1)</span></div>
+                    </div>
+
+                    <div class="monitor-header" style="margin-top: 20px;">MOCHILA / INVENTARIO</div>
+                    <div class="inventory-panel">
+                        <div class="inv-item">⚔️ ESPADA NICHIRIN COMÚN</div>
+                        <div class="inv-item">🍙 ONIGIRI DE EMERGENCIA (X2)</div>
+                        <div class="inv-item">📜 MAPA DEL MONTE FUJIKASANE</div>
+                    </div>
+                </aside>
+
+            </section>
+        </main> <!-- Cierre del único main maestro -->
+    </div> <!-- Cierre de interface-container -->
+
     <!-- Enlazamos nuestro archivo de lógica justo antes de cerrar el cuerpo -->
     <script src="js/app.js"></script>
 </body>
-
 </html>

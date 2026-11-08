@@ -302,3 +302,160 @@ body {
     font-size: 12px;
     color: #6b7280;
 }
+/* ==========================================================================
+   8. TERMINAL DE SIMULACIÓN INDUSTRIAL
+   ========================================================================== */
+/* Clase utilitaria para ocultar elementos */
+.hidden {
+    display: none !important;
+}
+
+.simulation-container {
+    display: grid;
+    /* Divide el panel derecho: 70% para el chat y texto, 30% para la ventana de estado */
+    grid-template-columns: 1fr 280px;
+    height: 100%;
+    width: 100%;
+    background-color: #05070c;
+    border: 1px solid #1e293b;
+    gap: 0px; /* Pegados de forma industrial */
+}
+
+/* Área central de la consola */
+.terminal-core {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-right: 1px solid #1e293b;
+}
+
+/* Pantalla donde van apareciendo los textos del rol */
+.terminal-screen {
+    flex-grow: 1;
+    padding: 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #070a12;
+}
+
+.system-log {
+    font-size: 11px;
+    color: #64748b;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+/* Mensajes individuales */
+.message {
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 90%;
+}
+
+.message .sender {
+    font-weight: 900;
+    display: block;
+    font-size: 12px;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+}
+
+.message.system .sender {
+    color: #00ffaa; /* Color del sistema mágico */
+}
+
+.message.user .sender {
+    color: #ffffff; /* Color de tus acciones */
+}
+
+.message.user {
+    align-self: flex-end;
+    text-align: right;
+    border-right: 2px solid #ffffff;
+    padding-right: 12px;
+}
+
+/* Barra inferior para escribir */
+.terminal-input-zone {
+    display: flex;
+    border-top: 1px solid #1e293b;
+    background-color: #090d16;
+}
+
+.terminal-input-zone input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    padding: 18px;
+    color: #ffffff;
+    font-size: 13px;
+    outline: none;
+}
+
+.terminal-input-zone button {
+    background-color: #1e293b;
+    border: none;
+    border-left: 1px solid #1e293b;
+    color: #00ffaa;
+    padding: 0 30px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.terminal-input-zone button:hover {
+    background-color: #00ffaa;
+    color: #05070c;
+}
+
+/* ==========================================================================
+   9. VENTANA DE SISTEMA LATERAL (MONITOR)
+   ========================================================================== */
+.system-monitor {
+    background-color: #090d16;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.monitor-header {
+    font-size: 11px;
+    font-weight: 800;
+    color: #64748b;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+}
+
+.stats-panel, .inventory-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.stat-val {
+    color: #ffffff;
+}
+
+.color-neon {
+    color: #00ffaa !important;
+}
+
+.inv-item {
+    font-size: 11px;
+    background-color: #0d1321;
+    border: 1px solid #1e293b;
+    padding: 10px;
+    color: #8892b0;
+}
