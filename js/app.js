@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // ==========================================================================
     // 1. SELECTORES DE LA INTERFAZ DE USUARIO
+    // ==========================================================================
     const botonesMenu = document.querySelectorAll(".menu-btn");
     const worldsBanner = document.getElementById("worlds-banner");
     const worldsCategories = document.getElementById("worlds-categories");
@@ -13,12 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const worldForm = document.getElementById("world-form");
     const worldsGrid = document.querySelector(".worlds-grid");
 
+    // ==========================================================================
     // 2. DICCIONARIO DE PESTAÑAS (Módulos de la interfaz Cyberpunk)
+    // ==========================================================================
     const contenidosSecciones = {
         personajes: `
             <section class="showcase-section">
                 <h1 class="banner-title" style="font-size: 24px; color: #ffffff; margin-bottom: 8px;">[IDENTIDADES VIRTUALES]</h1>
-                <p style="color: #64748b; margin-bottom: 24px; font-size: 13px;">AVATARES ACTIVOS DENTRO DE TUS ENFIELADOS DE ROL.</p>
+                <p style="color: #64748b; margin-bottom: 24px; font-size: 13px;">AVATARES ACTIVOS DENTRO DE TUS ENTORNOS DE ROL.</p>
                 <div class="worlds-grid">
                     <div class="world-card">
                         <div class="card-image-placeholder" style="background-color: #00ffaa11; border-bottom: 1px solid #00ffaa;"></div>
@@ -34,15 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
             <section class="showcase-section">
                 <h1 class="banner-title" style="font-size: 24px; color: #ffffff; margin-bottom: 8px;">[NÚCLEO DE USUARIO]</h1>
                 <p style="color: #64748b; font-size: 13px; margin-bottom: 20px;">ESTADÍSTICAS GLOBALES DEL JUGADOR Y REGISTROS DE CONFIGURACIÓN.</p>
-                <div class="inv-item" style="max-width: 400px; margin-bottom: 10px;">ID USUARIO: RADICAL_PLAYER_01</div>
-                <div class="inv-item" style="max-width: 400px; margin-bottom: 10px;">ESTADO DE CONEXIÓN: NODO_ACTIVO</div>
-                <div class="inv-item" style="max-width: 400px; color: #00ffaa;">CRÉDITOS SANDBOX: 100% LIBRE (SIN MONEDAS DE PAGO)</div>
+                <div class="inv-item" style="max-width: 400px; margin-bottom: 10px; padding: 12px; border: 1px solid #1e293b; background: #05070c;">ID USUARIO: RADICAL_PLAYER_01</div>
+                <div class="inv-item" style="max-width: 400px; margin-bottom: 10px; padding: 12px; border: 1px solid #1e293b; background: #05070c;">ESTADO DE CONEXIÓN: NODO_ACTIVO</div>
+                <div class="inv-item" style="max-width: 400px; padding: 12px; border: 1px solid #1e293b; background: #05070c; color: #00ffaa;">CRÉDITOS SANDBOX: 100% LIBRE (SIN MONEDAS DE PAGO)</div>
             </section>
         `,
         comunidad: `
             <section class="showcase-section">
                 <h1 class="banner-title" style="font-size: 24px; color: #ffffff; margin-bottom: 8px;">[RED DE TRANSMISIÓN]</h1>
-                <p style="color: #64748b; font-size: 13px;">HILOS DE LORE Y CÓDIGOS DE DIALOGO COMPARTIDOS POR OTROS OPERADORES.</p>
+                <p style="color: #64748b; font-size: 13px;">HILOS DE LORE Y CÓDIGOS DE DIÁLOGO COMPARTIDOS POR OTROS OPERADORES.</p>
             </section>
         `,
         mercado: `
@@ -52,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="worlds-grid">
                     <div class="world-card" style="padding: 16px;">
                         <h4 style="color: #00ffaa;">🎒 INVENTARIO RPG PRO</h4>
-                        <p style="margin: 8px 0; color: #64748b;">Módulo que permite a los personajes guardar objetos físicos y administrar consumibles.</p>
+                        <p style="margin: 8px 0; color: #64748b; font-size: 12px;">Módulo que permite a los personajes guardar objetos físicos y administrar consumibles.</p>
                         <button class="btn-play" style="padding: 8px 16px; font-size: 11px; margin-top: 10px;">INTEGRAR EN TERMINAL</button>
                     </div>
                 </div>
@@ -66,7 +70,9 @@ document.addEventListener("DOMContentLoaded", () => {
         `
     };
 
+    // ==========================================================================
     // 3. BASE DE DATOS DE MUNDOS (LOCALSTORAGE)
+    // ==========================================================================
     let mundosCreados = JSON.parse(localStorage.getItem("custom_worlds"));
     if (!mundosCreados || !Array.isArray(mundosCreados)) {
         mundosCreados = [];
@@ -102,11 +108,15 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         });
 
-        if (worldsGrid) worldsGrid.innerHTML = htmlContenido;
+        if (worldsGrid) {
+            worldsGrid.innerHTML = htmlContenido;
+        }
         vincularBotonesDeJuego();
     }
 
-    // 4. LOGICA DE INTERCAMBIO DE PESTAÑAS DEL MENÚ
+    // ==========================================================================
+    // 4. LÓGICA DE INTERCAMBIO DE PESTAÑAS DEL MENÚ LATERAL
+    // ==========================================================================
     const mapaSecciones = ["mundos", "personajes", "perfil", "comunidad", "mercado", "mapas"];
 
     botonesMenu.forEach((boton, index) => {
@@ -116,8 +126,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const seccionActual = mapaSecciones[index];
 
-            // Si el usuario hace clic en "Mundos"
             if (seccionActual === "mundos") {
+                // Volvemos a mostrar la pantalla de mundos base
                 if (simulationTerminal) simulationTerminal.classList.add("hidden");
                 if (worldsBanner) worldsBanner.classList.remove("hidden");
                 if (worldsCategories) worldsCategories.classList.remove("hidden");
@@ -125,11 +135,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (btnOpenCreator) btnOpenCreator.classList.remove("hidden");
                 cargarMundosEnGrid(); 
             } else {
+                // Ocultamos todo lo referente a la sección mundos/juego
                 if (simulationTerminal) simulationTerminal.classList.add("hidden");
                 if (worldsBanner) worldsBanner.classList.add("hidden");
                 if (worldsCategories) worldsCategories.classList.add("hidden");
                 if (btnOpenCreator) btnOpenCreator.classList.add("hidden");
                 
+                // Inyectamos dinámicamente el HTML del módulo seleccionado
                 if (worldsShowcase) {
                     worldsShowcase.classList.remove("hidden");
                     worldsShowcase.innerHTML = contenidosSecciones[seccionActual] || `<p style='color:#64748b;'>Sección en desarrollo...</p>`;
@@ -138,7 +150,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // ==========================================================================
     // 5. CONTROL DE LA VENTANA MODAL (CREADOR DE MUNDOS)
+    // ==========================================================================
     if (btnOpenCreator) {
         btnOpenCreator.addEventListener("click", () => worldModal && worldModal.classList.remove("hidden"));
     }
@@ -162,12 +176,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 6. ENLAZAR EL BOTÓN RECTANGULAR "JUGAR AHORA"
+    // ==========================================================================
+    // 6. ENLAZAR EL BOTÓN RECTANGULAR "JUGAR AHORA" (LÍNEA REPARADA)
+    // ==========================================================================
     function vincularBotonesDeJuego() {
         const btnStartGame = document.getElementById("btn-start-game");
         if (btnStartGame) {
             btnStartGame.onclick = () => {
-                if (worldsBanner) worldsBanner.add ? worldsBanner.classList.add("hidden") : worldsBanner.classList.add("hidden");
+                if (worldsBanner) worldsBanner.classList.add("hidden");
                 if (worldsCategories) worldsCategories.classList.add("hidden");
                 if (worldsShowcase) worldsShowcase.classList.add("hidden");
                 if (btnOpenCreator) btnOpenCreator.classList.add("hidden");
@@ -176,7 +192,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // ==========================================================================
     // 7. CONTROL DEL CHAT EN LA TERMINAL
+    // ==========================================================================
     const inputAccion = document.getElementById("user-input");
     const btnEnviar = document.getElementById("btn-send-action");
     const pantallaChat = document.getElementById("chat-screen");
@@ -187,8 +205,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const mensajeUsuario = document.createElement("div");
         mensajeUsuario.classList.add("message");
-        mensajeUsuario.innerHTML = `<span class="sender" style="color: #64748b;">[ACCIÓN]</span><p>${texto.toUpperCase()}</p>`;
-        
+        mensajeUsuario.innerHTML = `<span class="sender" style="color: #00ffaa;">[ACCIÓN]</span><p>${texto.toUpperCase()}</p>`;
+
         pantallaChat.appendChild(mensajeUsuario);
         inputAccion.value = "";
         pantallaChat.scrollTop = pantallaChat.scrollHeight;
@@ -196,14 +214,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (btnEnviar) btnEnviar.addEventListener("click", enviarAccionUsuario);
     if (inputAccion) {
-    if (inputAccion) {
         inputAccion.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") {
-                enviarAccionUsuario();
-            }
+            if (e.key === "Enter") enviarAccionUsuario();
         });
     }
 
-    // Inicializar cargando el grid principal de mundos en pantalla
+    // Inicializar cargando el grid principal de mundos
     cargarMundosEnGrid();
 });
