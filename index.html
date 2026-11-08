@@ -159,8 +159,34 @@
                         <div class="inv-item">📜 MAPA DEL MONTE FUJIKASANE</div>
                     </div>
                 </aside>
-
             </section>
+                        <!-- BOTÓN FLOTANTE PARA CREAR MUNDOS -->
+            <button id="btn-open-creator" class="btn-create-world">+ CREAR MUNDO</button>
+
+            <!-- VENTANA MODAL DEL CREADOR DE MUNDOS (EMPIEZA OCULTA) -->
+            <div id="world-modal" class="modal-overlay hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>[CREADOR DE UNIVERSOS]</h3>
+                        <button id="btn-close-modal" class="close-modal-btn">✕</button>
+                    </div>
+                    <form id="world-form" class="modal-form">
+                        <div class="form-group">
+                            <label>TITULO DEL MUNDO:</label>
+                            <input type="text" id="world-title" placeholder="EJ: NOVELA DE SUPERVIVENCIA" required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label>SINOPSIS / RESUMEN CORTO:</label>
+                            <textarea id="world-desc" rows="3" placeholder="DESCRIBE EL ENTORNO DE ROL AQUÍ..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>COLOR DE IDENTIDAD (CSS CORTO):</label>
+                            <input type="text" id="world-color" placeholder="EJ: #ff0055 O #4f46e5" value="#00ffaa">
+                        </div>
+                        <button type="submit" class="btn-submit-world">PUBLICAR EN EL SANDBOX</button>
+                    </form>
+                </div>
+            </div>
         </main> <!-- Cierre del único main maestro -->
     </div> <!-- Cierre de interface-container -->
 
