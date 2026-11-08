@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const worldForm = document.getElementById("world-form");
     const worldsGrid = document.querySelector(".worlds-grid");
 
-    // 2. SISTEMA DE ALMACENAMIENTO DE MUNDOS (LOCALSTORAGE)
+    // 2. SISTEMA DE ALMACENAMIENTO DE MUNDOS (CORREGIDO)
     let mundosCreados = JSON.parse(localStorage.getItem("custom_worlds")) || [];
 
     // Función para renderizar los mundos en pantalla
@@ -49,8 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         });
 
-        worldsGrid.innerHTML = htmlContenido;
-        vincularBotonesDeJuego(); // Vincula el clic para que los nuevos mundos también se puedan jugar
+        if (worldsGrid) {
+            worldsGrid.innerHTML = htmlContenido;
+        }
+        vincularBotonesDeJuego(); // Vincula el clic para que los mundos se puedan jugar
     }
 
     // 3. CONTROL DE LA VENTANA MODAL (ABRIR Y CERRAR)
@@ -89,7 +91,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function vincularBotonesDeJuego() {
         const btnStartGame = document.getElementById("btn-start-game");
         if (btnStartGame) {
-            btnStartGame.addEventListener("click", () => {
+            // Quitamos cualquier evento previo clonando el botón para evitar doble clic erróneo
+            const nuevoBtn = btnStartGame.cloneNode(true);
+            btnStartGame.parentNode.replaceChild(nuevoBtn, btnStartGame);
+            
+            nuevoBtn.addEventListener("click", () => {
                 worldsBanner.classList.add("hidden");
                 worldsCategories.classList.add("hidden");
                 worldsShowcase.classList.add("hidden");
@@ -105,6 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
             botonesMenu.forEach(b => b.classList.remove("active"));
             boton.classList.add("active");
 
+            // Limpieza general de pantallas al cambiar de pestaña
             simulationTerminal.classList.add("hidden");
             worldsBanner.classList.remove("hidden");
             worldsCategories.classList.remove("hidden");
