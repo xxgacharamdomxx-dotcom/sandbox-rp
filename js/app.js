@@ -1,80 +1,149 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. CAPTURA DE BOTONES Y PANELES
+    // 1. SELECTORES BÁSICOS DE NAVEGACIÓN Y JUEGO
     const botonesMenu = document.querySelectorAll(".menu-btn");
-    const btnStartGame = document.getElementById("btn-start-game");
-    
-    // Contenedores del menú de Mundos
     const worldsBanner = document.getElementById("worlds-banner");
     const worldsCategories = document.getElementById("worlds-categories");
     const worldsShowcase = document.getElementById("worlds-showcase");
-    
-    // Contenedor de la Terminal de Juego
     const simulationTerminal = document.getElementById("simulation-terminal");
 
-    // 2. LÓGICA DE CONTROL DEL BOTÓN "JUGAR AHORA"
-    if (btnStartGame) {
-        btnStartGame.addEventListener("click", () => {
-            // Ocultamos todas las secciones de la lista de mundos
-            worldsBanner.classList.add("hidden");
-            worldsCategories.classList.add("hidden");
-            worldsShowcase.classList.add("hidden");
-            
-            // Mostramos la gloriosa terminal de simulación neón
-            simulationTerminal.classList.remove("hidden");
+    // Selectores del Formulario y Modal
+    const btnOpenCreator = document.getElementById("btn-open-creator");
+    const btnCloseModal = document.getElementById("btn-close-modal");
+    const worldModal = document.getElementById("world-modal");
+    const worldForm = document.getElementById("world-form");
+    const worldsGrid = document.querySelector(".worlds-grid");
+
+    // 2. SISTEMA DE ALMACENAMIENTO DE MUNDOS (LOCALSTORAGE)
+    let mundosCreados = JSON.parse(localStorage.getItem("custom_worlds")) || [];
+
+    // Función para renderizar los mundos en pantalla
+    function cargarMundosEnGrid() {
+        // Mundos base por defecto
+        let htmlContenido = `
+            <div class="world-card">
+                <div class="card-image-placeholder"></div>
+                <div class="card-content">
+                    <h4>Lector Omnisciente</h4>
+                    <p>Entorno de rol interactivo basado en escenarios...</p>
+                </div>
+            </div>
+            <div class="world-card">
+                <div class="card-image-placeholder" style="background-color: #1a1e2e;"></div>
+                <div class="card-content">
+                    <h4>Kimetsu High School</h4>
+                    <p>Un mundo alternativo escolar de cazadores...</p>
+                </div>
+            </div>
+        `;
+
+        // Añadir los mundos que haya creado el usuario en la web
+        mundosCreados.forEach(mundo => {
+            htmlContenido += `
+                <div class="world-card">
+                    <div class="card-image-placeholder" style="background-color: ${mundo.color}44; border-bottom: 1px solid ${mundo.color};"></div>
+                    <div class="card-content">
+                        <h4 style="color: ${mundo.color};">${mundo.titulo}</h4>
+                        <p>${mundo.descripcion}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        worldsGrid.innerHTML = htmlContenido;
+        vincularBotonesDeJuego(); // Vincula el clic para que los nuevos mundos también se puedan jugar
+    }
+
+    // 3. CONTROL DE LA VENTANA MODAL (ABRIR Y CERRAR)
+    if (btnOpenCreator) {
+        btnOpenCreator.addEventListener("click", () => worldModal.classList.remove("hidden"));
+    }
+    if (btnCloseModal) {
+        btnCloseModal.addEventListener("click", () => worldModal.classList.add("hidden"));
+    }
+
+    // 4. GUARDAR EL NUEVO MUNDO CREADO POR EL JUGADOR
+    if (worldForm) {
+        worldForm.addEventListener("submit", (e) => {
+            e.preventDefault(); // Evita que la página se recargue
+
+            const nuevoMundo = {
+                titulo: document.getElementById("world-title").value.trim(),
+                descripcion: document.getElementById("world-desc").value.trim(),
+                color: document.getElementById("world-color").value.trim() || "#00ffaa"
+            };
+
+            // Lo metemos al arreglo de la memoria
+            mundosCreados.push(nuevoMundo);
+            localStorage.setItem("custom_worlds", JSON.stringify(mundosCreados));
+
+            // Limpiar y cerrar formulario
+            worldForm.reset();
+            worldModal.classList.add("hidden");
+
+            // Volver a renderizar la rejilla actualizada
+            cargarMundosEnGrid();
         });
     }
 
-    // 3. RESTABLECER LA INTERFAZ AL HACER CLIC EN OTRO BOTÓN DEL MENÚ
+    // 5. ENLAZAR EL BOTÓN "JUGAR AHORA" E INGRESAR A LA TERMINAL
+    function vincularBotonesDeJuego() {
+        const btnStartGame = document.getElementById("btn-start-game");
+        if (btnStartGame) {
+            btnStartGame.addEventListener("click", () => {
+                worldsBanner.classList.add("hidden");
+                worldsCategories.classList.add("hidden");
+                worldsShowcase.classList.add("hidden");
+                if (btnOpenCreator) btnOpenCreator.classList.add("hidden");
+                simulationTerminal.classList.remove("hidden");
+            });
+        }
+    }
+
+    // Navegación de pestañas del menú lateral izquierdo
     botonesMenu.forEach((boton) => {
         boton.addEventListener("click", () => {
-            // Quitar clase activa a todos y ponérsela al seleccionado
             botonesMenu.forEach(b => b.classList.remove("active"));
             boton.classList.add("active");
 
-            // Si el usuario presiona un botón diferente (como Personajes, Perfil, etc.)
-            // salimos de la simulación y regresamos al estado base
             simulationTerminal.classList.add("hidden");
             worldsBanner.classList.remove("hidden");
             worldsCategories.classList.remove("hidden");
             worldsShowcase.classList.remove("hidden");
+            
+            // Si regresa a "Mundos", volvemos a mostrar el botón de crear
+            if (boton.textContent.includes("Mundos") && btnOpenCreator) {
+                btnOpenCreator.classList.remove("hidden");
+            } else if (btnOpenCreator) {
+                btnOpenCreator.classList.add("hidden");
+            }
         });
     });
 
-    // 4. SISTEMA DE ENVÍO DE ACCIONES DENTRO DEL CHAT
+    // 6. LÓGICA DE MENSAJES DE LA TERMINAL
     const inputAccion = document.getElementById("user-input");
     const btnEnviar = document.getElementById("btn-send-action");
     const pantallaChat = document.getElementById("chat-screen");
 
     function enviarAccionUsuario() {
         const texto = inputAccion.value.trim();
-        if (texto === "") return; // Ignorar si está vacío
+        if (texto === "") return;
 
-        // Crear elemento HTML para el mensaje del usuario
         const mensajeUsuario = document.createElement("div");
         mensajeUsuario.classList.add("message");
         mensajeUsuario.innerHTML = `<span class="sender" style="color: #64748b;">[ACCIÓN]</span><p>${texto.toUpperCase()}</p>`;
         
-        // Adjuntarlo a la pantalla de la consola
         pantallaChat.appendChild(mensajeUsuario);
-        
-        // Limpiar la barra de entrada de texto
         inputAccion.value = "";
-        
-        // Auto-scroll automático hacia abajo para no perder el hilo
         pantallaChat.scrollTop = pantallaChat.scrollHeight;
     }
 
-    // Detectar clic en el botón ENVIAR
-    if (btnEnviar) {
-        btnEnviar.addEventListener("click", enviarAccionUsuario);
-    }
-
-    // Detectar cuando el usuario presiona la tecla 'Enter' en el teclado
+    if (btnEnviar) btnEnviar.addEventListener("click", enviarAccionUsuario);
     if (inputAccion) {
         inputAccion.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") {
-                enviarAccionUsuario();
-            }
+            if (e.key === "Enter") enviarAccionUsuario();
         });
     }
+
+    // Inicializar cargando los mundos existentes en la base de datos local
+    cargarMundosEnGrid();
 });
